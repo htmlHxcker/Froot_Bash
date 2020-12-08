@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
+    <link rel="stylesheet" href="./Styles/#" media="screen">
+    <title>Froot Bash</title>
+</head>
+<body>
+    <div id="container">
+        <div id="game-container">
+            <canvas id="game-canvas" width="640" height="480" class="game-layer"></canvas>
+
+            <div id="score-screen" class="game-layer">
+                <img src="./Images/Icons/volume.png" alt="Toggle Music" id="toggle-music">
+                <img src="./Images/Icons/previous.png" alt="Restart this Level" id="restart-level">
+                <span id="score">Score: 0</span>
+            </div>
+
+            <div id="game-start-screen" class="game-layer">
+                <img src="./Images/Icons/play-button.png" alt="lay Game">
+                <img src="./Images/Icons/settings.png" alt="Settings">
+            </div>
+
+            <div id="level-select-screen" class="game-layer"></div>
+
+            <div id="loading-screen" class="game-layer">
+                <div id="loading-message"></div>
+            </div>
+
+            <div id="ending-screen" class="game-layer">
+                <div>
+                    <p id="ending-message">The Level is Over</p>
+                    <p id="play-current-level" class="ending-option">
+                        <img src="./Images/Icons/previous.png" alt="Replay Level">
+                        Replay Current Level
+                    </p>
+                    <p id="play-next-level" class="ending-option">
+                        <img src="./Images/Icons/next.png" alt="next level">
+                        Play Next Level
+                    </p>
+                    <p id="return-to-level-screen" class="ending-option">
+                        <img src="./Images/Icons/return.png" alt="return to previous level">
+                        Return ti Level Screen
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="./Scripts/#"></script>
+</html>
