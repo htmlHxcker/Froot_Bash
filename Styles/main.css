@@ -1,0 +1,36 @@
+body {
+  background: #ca0eba;
+  user-select: none;
+}
+
+#wrapper {
+  position: absolute;
+}
+
+#game-container {
+  margin: auto;
+  width: 640px;
+  height: 480px;
+  background-image: url(/Images/splash-screen.png);
+}
+
+.game-layer {
+  width: 100;
+  height: 100;
+  position: absolute;
+  display: none;
+}
+
+/* Game Start Menu Screen */
+
+#game-start-screen {
+  padding-top: 250px;
+  text-align: center;
+}
+
+#game-start-screen img {
+  cursor: pointer;
+  display: block;
+  height: 3em;
+  width: auto;
+}
