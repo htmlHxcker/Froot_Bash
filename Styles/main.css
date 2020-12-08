@@ -1,6 +1,6 @@
 :root{
   --bright-pink:#ca0eba;
-  --bright-blue:#2109f7;
+  --bright-blue:#f7f309e3;
 }
 body {
   background:var(--bright-pink);
@@ -40,17 +40,18 @@ body {
   height: 4em;
 }
 
+/* Level Selection Screen */
 #level-select-screen{
   padding-top: 150px;
   padding-left: 50px;
 }
 
-#level-select-screen > input {
+#level-select-screen  input {
   margin:20px;
   cursor: pointer;
 
   background: url(Images/Icons/levels.svg) no-repeat;
-  color:var(--bright-blue);
+  color:var(--bright-yello);
   font-size: 20px;
 
   width: 64px;

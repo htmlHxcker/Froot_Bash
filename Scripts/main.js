@@ -58,7 +58,7 @@ let levels = {
       const button = document.createElement("input");
 
       button.type = "button";
-      button.value = i + 1;
+      button.value = (index + 1);
       button.addEventListener("click", buttonClickHandler);
 
       levelSelectScreen.appendChild(button);
