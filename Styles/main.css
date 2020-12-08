@@ -1,22 +1,25 @@
+:root{
+  --bright-pink:#ca0eba;
+  --bright-blue:#2109f7;
+}
 body {
-  background: #ca0eba;
+  background:var(--bright-pink);
   user-select: none;
 }
 
-#wrapper {
+#container {
   position: absolute;
 }
 
 #game-container {
-  margin: auto;
   width: 640px;
   height: 480px;
-  background-image: url(/Images/splash-screen.png);
+  background: url(/Images/splash-screen.png);
 }
 
 .game-layer {
-  width: 100;
-  height: 100;
+  width: 100%;
+  height: 100%;
   position: absolute;
   display: none;
 }
@@ -29,8 +32,30 @@ body {
 }
 
 #game-start-screen img {
+  margin: 10px;
   cursor: pointer;
-  display: block;
-  height: 3em;
-  width: auto;
+}
+
+.config-buttons{
+  height: 4em;
+}
+
+#level-select-screen{
+  padding-top: 150px;
+  padding-left: 50px;
+}
+
+#level-select-screen > input {
+  margin:20px;
+  cursor: pointer;
+
+  background: url(Images/Icons/levels.svg) no-repeat;
+  color:var(--bright-blue);
+  font-size: 20px;
+
+  width: 64px;
+  height: 64px;
+
+  border: 0;
+  outline: 0;
 }
