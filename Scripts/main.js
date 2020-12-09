@@ -4,7 +4,7 @@ const game = {
     game.context = game.canvas.getContext("2d");
     //Object Initialization
     levels.init();
-    loader.init()
+    loader.init();
 
     game.hideScreens();
     game.showScreen("game-start-screen");
@@ -12,7 +12,7 @@ const game = {
 
   hideScreens() {
     let screens = document.getElementsByClassName("game-layer");
-    for (let i = 0; i < screens.length; i++) {
+    for (let i = screens.length - 1; i > 0; i--) {
       const screen = screens[i];
       screen.style.display = "none";
     }
@@ -28,10 +28,6 @@ const game = {
     screen.style.display = "block";
   },
 
-  test: () => {
-    console.log("Hello");
-  },
-
   showLevelScreen() {
     game.hideScreens();
     game.showScreen("level-select-screen");
@@ -43,12 +39,27 @@ const levels = {
   data: [
     {
       foreground: "desert-foreground",
-      background: "clouds-background",
+      background: "level1",
       entities: [],
     },
     {
       foreground: "desert-foreground",
-      background: "clouds-background",
+      background: "level2",
+      entities: [],
+    },
+    {
+      foreground: "desert-foreground",
+      background: "level3",
+      entities: [],
+    },
+    {
+      foreground: "desert-foreground",
+      background: "level4",
+      entities: [],
+    },
+    {
+      foreground: "desert-foreground",
+      background: "level5",
       entities: [],
     },
   ],
@@ -58,6 +69,7 @@ const levels = {
 
     let buttonClickHandler = function () {
       game.hideScreen("level-select-screen");
+
       levels.load(this.value - 1);
     };
 
@@ -72,18 +84,30 @@ const levels = {
     }
   },
 
-  load() {},
+  load(number) {
+    game.currentLevel = { number: number };
+    game.score = 0;
+
+    document.getElementById("score").innerText = `Score: ${game.score}`;
+    const level = levels.data[number];
+
+    game.currentLevel.backgroundImage = loader.loadImage(
+      `./Images/Background/${level.background}.png`
+    );
+    game.currentLevel.foregroundImage = loader.loadImage(
+      `./Images/Background/${level.background}.png`
+    );
+  },
 };
 
 // Loading Select Screen
 const loader = {
   loaded: true,
-  loadedCount: 0,
+  loadedAssetsCount: 0,
   totalAssetsCount: 0,
 
   init() {
-    let mp3support,
-      oggSupport ;
+    let mp3support, oggSupport;
     let audio = document.createElement("audio");
 
     if (audio.canPlayType) {
@@ -94,16 +118,12 @@ const loader = {
       oggSupport = false;
     }
 
-    this.soundFileExtn = oggSupport
-      ? ".ogg"
-      : mp3support
-      ? ".mp3"
-      : "undefined";
+    this.soundFileExtn = oggSupport ? ".ogg" : mp3support ? ".mp3" : undefined;
   },
 
   loadImage(url) {
     this.loaded = false;
-    ++this.totalAssetsCount;
+    this.totalAssetsCount++;
 
     game.showScreen("loading-screen");
 
@@ -119,33 +139,35 @@ const loader = {
 
   loadSound(url) {
     this.loaded = false;
-    ++this.totalAssetsCount;
+    this.totalAssetsCount++;
 
     game.showScreen("loading-screen");
 
     const audio = new Audio();
     audio.addEventListener("canplaythrough", this.itemLoaded, false);
     audio.src = url + this.soundFileExtn;
+
+    return audio;
   },
 
   itemLoaded(event) {
     event.target.removeEventListener(event.type, this.itemLoaded, false);
-    loader.loadedCount++;
+    this.loadedAssetsCount++;
 
     document.getElementById(
       "loading-message"
-    ).innerText = `Loaded ${loader.loadedCount} of ${loader.totalAssetsCount}`;
+    ).innerText = `Loaded {this.loadedAssetsCount}  of ${this.totalAssetsCount}`;
 
-    if (loader.loadedCount === loader.totalAssetsCount) {
+    if (this.loadedAssetsCount === this.totalAssetsCount) {
       this.loaded = true;
-      this.loadedCount = 0;
+      this.loadedAssetsCount = 0;
       this.totalAssetsCount = 0;
 
       game.hideScreen("loading-screen");
 
       if (this.onload) {
         this.onload();
-        this.onload == undefined;
+        this.onload = undefined;
       }
     }
   },
