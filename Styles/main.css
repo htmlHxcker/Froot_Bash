@@ -1,6 +1,6 @@
 :root{
   --bright-pink:#ca0eba;
-  --bright-blue:#f7f309e3;
+  --bright-yellow:#f7f309e3;
 }
 body {
   background:var(--bright-pink);
@@ -50,8 +50,8 @@ body {
   margin:20px;
   cursor: pointer;
 
-  background: url(Images/Icons/levels.svg) no-repeat;
-  color:var(--bright-yello);
+  background:var(--bright-yellow);
+  color:var(--bright-pink);
   font-size: 20px;
 
   width: 64px;
@@ -59,4 +59,17 @@ body {
 
   border: 0;
   outline: 0;
+}
+
+#loading-screen{
+  background: rgb(6, 41, 243);
+}
+
+#loading-message{
+  margin-top: 400px;
+  text-align: center;
+  height: 48px;
+  color: white;
+  background: url(Images/loader.gif) no-repeat center;
+  font: 12pt Arial;
 }
