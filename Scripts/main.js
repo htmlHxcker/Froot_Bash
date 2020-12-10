@@ -32,6 +32,94 @@ const game = {
     game.hideScreens();
     game.showScreen("level-select-screen");
   },
+
+  mode: "intro",
+  slingshotX: 140,
+  slingshotY: 280,
+
+  slingshotBandX: 140 + 25,
+  slingshotBandY: 280 + 23,
+
+  ended: false,
+
+  score: 0,
+
+  offsetLeft: 0,
+
+  start() {
+    game.hideScreens();
+
+    // Display the Game Canvas and score.
+
+    game.showScreen("game-canvas");
+    game.showScreen("score-screen");
+
+    game.mode = "intro";
+    game.currentHero = undefined;
+
+    game.offsetLeft = 0;
+    game.ended = false;
+
+    game.animationFrame = window.requestAnimationFrame(
+      game.animate,
+      game.canvas
+    );
+  },
+
+  handleGameLogic() {
+    game.offsetLeft++;
+  },
+
+  animate() {
+    game.handleGameLogic();
+
+    // Background Image
+    game.context.drawImage(
+      game.currentLevel.backgroundImage,
+      game.offsetLeft / 4,
+      0,
+      game.canvas.width,
+      game.canvas.height,
+      0,
+      0,
+      game.canvas.width,
+      game.canvas.height
+    );
+
+    // Foreground Image
+    game.context.drawImage(
+      game.currentLevel.foregroundImage,
+      game.offsetLeft,
+      0,
+      game.canvas.width,
+      game.canvas.height,
+      0,
+      0,
+      game.canvas.width,
+      game.canvas.height
+    );
+
+    // Base of the Slingshot
+    game.context.drawImage(
+      game.slingShotImage,
+      game.slingshotX - game.offsetLeft,
+      game.slingShotY
+    );
+
+    // Frontof the slingshot Image
+    game.context.drawImage(
+      game.slingShotFrontImage,
+      game.slingshotX - game.offsetLeft,
+      game.slingshotY
+    );
+
+    if (!game.ended) {
+      game.animationFrame = window.requestAnimationFrame(
+        game.animate,
+        game.canvas
+      );
+    }
+  },
 };
 
 //Level Select Screen
@@ -160,7 +248,7 @@ const loader = {
 
     document.getElementById(
       "loading-message"
-    ).innerText = `Loaded {this.loadedAssetsCount}  of ${this.totalAssetsCount}`;
+    ).innerText = `Loaded ${this.loadedAssetsCount}  of ${this.totalAssetsCount}`;
 
     if (this.loadedAssetsCount === this.totalAssetsCount) {
       this.loaded = true;
