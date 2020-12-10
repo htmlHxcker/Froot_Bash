@@ -38,28 +38,28 @@ const game = {
 const levels = {
   data: [
     {
-      foreground: "desert-foreground",
-      background: "level1",
+      foreground: "level1-foreground",
+      background: "level1-background",
       entities: [],
     },
     {
-      foreground: "desert-foreground",
-      background: "level2",
+      foreground: "level2-foreground",
+      background: "level2-background",
       entities: [],
     },
     {
-      foreground: "desert-foreground",
-      background: "level3",
+      foreground: "level3-foreground",
+      background: "level3-background",
       entities: [],
     },
     {
-      foreground: "desert-foreground",
-      background: "level4",
+      foreground: "level4-foreground",
+      background: "level4-background",
       entities: [],
     },
     {
-      foreground: "desert-foreground",
-      background: "level5",
+      foreground: "level5-foreground",
+      background: "level5-background",
       entities: [],
     },
   ],
@@ -97,6 +97,10 @@ const levels = {
     game.currentLevel.foregroundImage = loader.loadImage(
       `./Images/Background/${level.background}.png`
     );
+    game.slingShotImage = loader.loadImage("Images/slingshot.png");
+    game.slingShotFrontImage = loader.loadImage("Images/slingshot-front.png");
+
+    loader.onload = game.start;
   },
 };
 
