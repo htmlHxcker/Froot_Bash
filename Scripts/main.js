@@ -1,3 +1,13 @@
+const b2Vec2 = Box2D.Common.Math.b2Vec2;
+const b2BodyDef = Box2D.Dynamics.b2BodyDef;
+const b2Body = Box2D.Dynamics.b2Body;
+const b2FixtureDef = Box2D.Dynamics.b2FixtureDef;
+const b2World = Box2D.Dynamics.b2World;
+const b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape;
+const b2CircleShape = Box2D.Collision.Shapes.b2CircleShape;
+const b2DebugDraw = Box2D.Dynamics.b2DebugDraw;
+const b2ContactListener = Box2D.Dynamics.b2ContactListener;
+
 const game = {
   init() {
     game.canvas = document.getElementById("game-canvas");
@@ -5,6 +15,7 @@ const game = {
     //Object Initialization
     levels.init();
     loader.init();
+    mouse.init();
 
     game.hideScreens();
     game.showScreen("game-start-screen");
@@ -65,9 +76,77 @@ const game = {
       game.canvas
     );
   },
+  maxSpeed: 3,
+
+  panTo(newCenter) {
+    let minOffset = 0;
+    let maxOffset =
+      game.currentLevel.backgroundImage.width - game.canvas.width;
+
+    let currentCenter = game.offsetLeft + game.canvas.width / 2;
+
+    if (
+      Math.abs(newCenter - currentCenter) > 0 &&
+      game.offsetLeft <= maxOffset &&
+      game.offsetLeft >= minOffset
+    ) {
+      let deltaX = (newCenter - currentCenter) / 2;
+
+      if (Math.abs(deltaX) > game.maxSpeed) {
+        deltaX = game.maxSpeed * Math.sign(deltaX);
+      }
+      if (Math.abs(deltaX) <= 1) {
+        deltaX = newCenter - currentCenter;
+      }
+
+      game.offsetLeft += deltaX;
+
+      if (game.offsetLeft <= minOffset) {
+        game.offsetLeft = minOffset;
+        return true;
+      } else if (game.offsetLeft >= maxOffset) {
+        game.offsetLeft = maxOffset;
+        return true;
+      }
+    } else {
+      return true;
+    }
+  },
 
   handleGameLogic() {
-    game.offsetLeft++;
+    if (game.mode === "intro") {
+      if (game.panTo(700)) {
+        game.mode = "load-next-hero";
+      }
+    }
+
+    if (game.mode === "wait-for-firing") {
+      if (mouse.dragging) {
+        game.panTo(mouse.x + game.offsetLeft);
+      } else {
+        game.panTo(game.slingshotX);
+      }
+    }
+
+    if (game.mode === "load-next-hero") {
+      game.mode = "wait-for-firing";
+    }
+
+    if (game.mode === "firing") {
+      
+    }
+
+    if (game.mode === "fired") {
+      
+    }
+
+    if (game.mode === "fired") {
+      
+    }
+
+    if (game.mode === "level-success" || game.mode === "level-failure") {
+      
+    }
   },
 
   animate() {
@@ -120,7 +199,6 @@ const game = {
       );
     }
   },
-
 };
 
 //Level Select Screen
@@ -211,13 +289,16 @@ const loader = {
       oggSupport = false;
     }
 
-    loader.soundFileExtn = oggSupport ? ".ogg" : mp3support ? ".mp3" : undefined;
+    loader.soundFileExtn = oggSupport
+      ? ".ogg"
+      : mp3support
+      ? ".mp3"
+      : undefined;
   },
 
   loadImage(url) {
     this.loaded = false;
     this.totalAssetsCount++;
-
 
     game.showScreen("loading-screen");
 
@@ -271,11 +352,41 @@ const mouse = {
   x: 0,
   y: 0,
   down: false,
-  dragging:false,
+  dragging: false,
 
-  init(){
-    const canvas = document
-  }
+  init() {
+    const canvas = document.getElementById("game-canvas");
+
+    canvas.addEventListener("mousemove", mouse.mousemoveHandler, false);
+    canvas.addEventListener("mousedown", mouse.mousedownHandler, false);
+    canvas.addEventListener("mouseup", mouse.mouseupHandler, false);
+    canvas.addEventListener("mouseout", mouse.mouseupHandler, false);
+  },
+
+  mousemoveHandler(event) {
+    const offset = game.canvas.getBoundingClientRect();
+    mouse.x = event.clientX - offset.left;
+    mouse.y = event.clientY - offset.top;
+
+    if (mouse.down) {
+      mouse.dragging = true;
+    }
+
+    event.preventDefault;
+  },
+
+  mousedownHandler(event) {
+    mouse.down = true;
+
+    event.preventDefault();
+  },
+
+  mouseupHandler(event) {
+    mouse.down = false;
+    mouse.dragging = false;
+
+    event.preventDefault();
+  },
 };
 
 window.addEventListener("load", function () {
