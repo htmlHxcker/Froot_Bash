@@ -120,34 +120,35 @@ const game = {
       );
     }
   },
+
 };
 
 //Level Select Screen
 const levels = {
   data: [
     {
-      foreground: "level1-foreground",
-      background: "level1-background",
+      foreground: "desert-foreground",
+      background: "clouds-background",
       entities: [],
     },
     {
-      foreground: "level2-foreground",
-      background: "level2-background",
+      foreground: "desert-foreground",
+      background: "clouds-background",
       entities: [],
     },
     {
-      foreground: "level3-foreground",
-      background: "level3-background",
+      foreground: "desert-foreground",
+      background: "clouds-background",
       entities: [],
     },
     {
-      foreground: "level4-foreground",
-      background: "level4-background",
+      foreground: "desert-foreground",
+      background: "clouds-background",
       entities: [],
     },
     {
-      foreground: "level5-foreground",
-      background: "level5-background",
+      foreground: "desert-foreground",
+      background: "clouds-background",
       entities: [],
     },
   ],
@@ -177,16 +178,16 @@ const levels = {
     game.score = 0;
 
     document.getElementById("score").innerText = `Score: ${game.score}`;
-    const level = levels.data[number];
+    let level = levels.data[number];
 
     game.currentLevel.backgroundImage = loader.loadImage(
       `./Images/Background/${level.background}.png`
     );
     game.currentLevel.foregroundImage = loader.loadImage(
-      `./Images/Background/${level.background}.png`
+      `./Images/Background/${level.foreground}.png`
     );
-    game.slingShotImage = loader.loadImage("Images/slingshot.png");
-    game.slingShotFrontImage = loader.loadImage("Images/slingshot-front.png");
+    game.slingShotImage = loader.loadImage("./Images/slingshot.png");
+    game.slingShotFrontImage = loader.loadImage("./Images/slingshot.png");
 
     loader.onload = game.start;
   },
@@ -210,18 +211,19 @@ const loader = {
       oggSupport = false;
     }
 
-    this.soundFileExtn = oggSupport ? ".ogg" : mp3support ? ".mp3" : undefined;
+    loader.soundFileExtn = oggSupport ? ".ogg" : mp3support ? ".mp3" : undefined;
   },
 
   loadImage(url) {
     this.loaded = false;
     this.totalAssetsCount++;
 
+
     game.showScreen("loading-screen");
 
     const image = new Image();
 
-    image.addEventListener("load", this.itemLoaded, false);
+    image.addEventListener("load", loader.itemLoaded, false);
     image.src = url;
 
     return image;
@@ -236,33 +238,44 @@ const loader = {
     game.showScreen("loading-screen");
 
     const audio = new Audio();
-    audio.addEventListener("canplaythrough", this.itemLoaded, false);
-    audio.src = url + this.soundFileExtn;
+    audio.addEventListener("canplaythrough", loader.itemLoaded, false);
+    audio.src = url + loader.soundFileExtn;
 
     return audio;
   },
 
   itemLoaded(event) {
     event.target.removeEventListener(event.type, this.itemLoaded, false);
-    this.loadedAssetsCount++;
+    loader.loadedAssetsCount++;
 
     document.getElementById(
       "loading-message"
-    ).innerText = `Loaded ${this.loadedAssetsCount}  of ${this.totalAssetsCount}`;
+    ).innerText = `Loaded ${loader.loadedAssetsCount}  of ${loader.totalAssetsCount}`;
 
-    if (this.loadedAssetsCount === this.totalAssetsCount) {
-      this.loaded = true;
-      this.loadedAssetsCount = 0;
-      this.totalAssetsCount = 0;
+    if (loader.loadedAssetsCount === loader.totalAssetsCount) {
+      loader.loaded = true;
+      loader.loadedAssetsCount = 0;
+      loader.totalAssetsCount = 0;
 
       game.hideScreen("loading-screen");
 
-      if (this.onload) {
-        this.onload();
-        this.onload = undefined;
+      if (loader.onload) {
+        loader.onload();
+        loader.onload = undefined;
       }
     }
   },
+};
+
+const mouse = {
+  x: 0,
+  y: 0,
+  down: false,
+  dragging:false,
+
+  init(){
+    const canvas = document
+  }
 };
 
 window.addEventListener("load", function () {

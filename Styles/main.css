@@ -37,7 +37,11 @@ body {
 }
 
 .config-buttons{
-  height: 4em;
+  height: 4rem;
+}
+
+.playing-buttons{
+  height:2rem;
 }
 
 /* Level Selection Screen */
@@ -72,4 +76,26 @@ body {
   color: white;
   background: url(/Images/loader.gif) no-repeat center;
   font: 12px Arial;
+}
+
+#score-screen {
+  height: 60px;
+  font: 32px "Comic Sans MS";
+  text-shadow: 0 0 2px black;
+  color: white;
+}
+
+#score-screen img {
+  opacity: 0.6;
+  top: 5%;
+  left: 5%;
+  position: relative;
+  padding: 8px;
+  cursor: pointer;
+}
+
+#score {
+  position: absolute;
+  top: 5%;
+  right: 5%;
 }
