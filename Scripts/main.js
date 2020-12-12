@@ -1,13 +1,3 @@
-const b2Vec2 = Box2D.Common.Math.b2Vec2;
-const b2BodyDef = Box2D.Dynamics.b2BodyDef;
-const b2Body = Box2D.Dynamics.b2Body;
-const b2FixtureDef = Box2D.Dynamics.b2FixtureDef;
-const b2World = Box2D.Dynamics.b2World;
-const b2PolygonShape = Box2D.Collision.Shapes.b2PolygonShape;
-const b2CircleShape = Box2D.Collision.Shapes.b2CircleShape;
-const b2DebugDraw = Box2D.Dynamics.b2DebugDraw;
-const b2ContactListener = Box2D.Dynamics.b2ContactListener;
-
 const game = {
   init() {
     game.canvas = document.getElementById("game-canvas");
@@ -80,8 +70,7 @@ const game = {
 
   panTo(newCenter) {
     let minOffset = 0;
-    let maxOffset =
-      game.currentLevel.backgroundImage.width - game.canvas.width;
+    let maxOffset = game.currentLevel.backgroundImage.width - game.canvas.width;
 
     let currentCenter = game.offsetLeft + game.canvas.width / 2;
 
@@ -133,19 +122,15 @@ const game = {
     }
 
     if (game.mode === "firing") {
-      
     }
 
     if (game.mode === "fired") {
-      
     }
 
     if (game.mode === "fired") {
-      
     }
 
     if (game.mode === "level-success" || game.mode === "level-failure") {
-      
     }
   },
 
@@ -386,6 +371,45 @@ const mouse = {
     mouse.dragging = false;
 
     event.preventDefault();
+  },
+};
+
+const box2d = {
+  scale: 30,
+
+  init() {
+    const gravity = new b2Vec2(0, 9.8);
+    let allowSleep = true;
+    box2d.world = new b2World(gravity, allowSleep);
+  },
+
+  createRectanle(entity, definition) {
+    const bodyDef = new b2BodyDef();
+
+    if (entity.isStatic) {
+      bodyDef.type = b2Body.b2_staticBody;
+    }
+    bodyDef.type = b2Body.b2_dynamicBody;
+
+    bodyDef.position.x = entity.x / box2d.scale;
+    bodyDef.position.y = entity.y / box2d.scale;
+
+    if (entity.angle) {
+      bodyDef.angle = (Math.PI * entity.angle) / 180;
+    }
+
+    const fixtureDef = new b2FixtureDef();
+    fixtureDef.density = definition.density;
+    fixtureDef.friction = definition.friction;
+    fixtureDef.restitution = definition.restitution;
+
+    fixtureDef.shape = new b2PolygonShape();
+    fixtureDef.shape.setAsBox(
+      entity.width / 2 / box2d.scale,
+      entity.height / 2 / box2d.scale
+    );
+
+    const body = box2d.world.CreateBody(bodyDef)
   },
 };
 
