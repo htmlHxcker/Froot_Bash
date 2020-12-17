@@ -409,8 +409,15 @@ const box2d = {
       entity.height / 2 / box2d.scale
     );
 
-    const body = box2d.world.CreateBody(bodyDef)
+    const body = box2d.world.CreateBody(bodyDef);
+
+    body.SetUserDaya(entity);
+    body.createFixture(fixtureDef);
+
+    return body;
   },
+
+  createCircle(entity, definition){}
 };
 
 window.addEventListener("load", function () {
