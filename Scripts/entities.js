@@ -65,8 +65,46 @@ const entities = {
       restitution: 0.4,
     },
   },
-  create(entity){
+  create(entity) {
+    let definiton = entities.definitions[entity.name];
 
+    if (!definition) {
+      console.log("Undefined Entity Name", entity.name);
+      return;
+    }
+    switch (entity.type) {
+      case "block":
+        entity.health = definiton.fullHealth;
+        entity.fullHealth = definiton.fullHealth;
+        entity.shape = "rectangle";
+        entity.sprite = loader.loadImage(`Images/entities/${entity.name}.png`);
+
+        box2d.createRectangle(entity, definiton);
+        break;
+      case "ground":
+        entity.shape = "rectangle";
+        box2d.createRectangle(entity, definiton);
+        break;
+      case "hero":
+      case "villain":
+        entity.health = definiton.fullHealth;
+        entity.fullHealth = definiton.fullHealth;
+        entity.sprite = loader.loadImage(`Images/entities/${entity.name}.png`);
+        entity.shape = definition.shape;
+        if (definition.shape === "circle") {
+          entity.radius = definition.radius;
+          box2d.createCircle(entity, definition);
+        } else if (definition.shape === "rectangle") {
+          entity.width = definition.width;
+          entity.height = definition.height;
+          box2d.createRectangle(entity, definition);
+        }
+        break;
+
+      default:
+        console.log("Undefined Entity Type", entity.type)
+        break;
+    }
   },
-  draw(entity,position,angle){}
+  draw(entity, position, angle) {},
 };

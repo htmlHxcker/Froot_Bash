@@ -197,12 +197,152 @@ const levels = {
     {
       foreground: "desert-foreground",
       background: "clouds-background",
-      entities: [],
+      entities: [
+        {
+          type: "ground",
+          name: "dirt",
+          x: 500,
+          y: 440,
+          width: 1000,
+          height: 20,
+          isStatic: true,
+        },
+
+        {
+          type: "ground",
+          name: "wood",
+          x: 190,
+          y: 390,
+          width: 30,
+          height: 80,
+          isStatic: true,
+        },
+        {
+          type: "block",
+          name: "wood",
+          x: 500,
+          y: 380,
+          angle: 90,
+          width: 100,
+          height: 25,
+        },
+        {
+          type: "block",
+          name: "glass",
+          x: 500,
+          y: 280,
+          angle: 90,
+          width: 100,
+          height: 25,
+        },
+        { type: "villain", name: "burger", x: 500, y: 205, calories: 590 },
+        {
+          type: "block",
+          name: "wood",
+          x: 800,
+          y: 380,
+          angle: 90,
+          width: 100,
+          height: 25,
+        },
+        {
+          type: "block",
+          name: "glass",
+          x: 800,
+          y: 280,
+          angle: 90,
+          width: 100,
+          height: 25,
+        },
+        { type: "villain", name: "fries", x: 800, y: 205, calories: 420 },
+        { type: "hero", name: "orange", x: 80, y: 405 },
+        { type: "hero", name: "apple", x: 140, y: 405 },
+      ],
     },
     {
       foreground: "desert-foreground",
       background: "clouds-background",
-      entities: [],
+      entities: [
+        {
+          type: "ground",
+          name: "dirt",
+          x: 500,
+          y: 440,
+          width: 1000,
+          height: 20,
+          isStatic: true,
+        },
+        {
+          type: "ground",
+          name: "wood",
+          x: 190,
+          y: 390,
+          width: 30,
+          height: 80,
+          isStatic: true,
+        },
+        {
+          type: "block",
+          name: "wood",
+          x: 850,
+          y: 380,
+          angle: 90,
+          width: 100,
+          height: 25,
+        },
+        {
+          type: "block",
+          name: "wood",
+          x: 700,
+          y: 380,
+          angle: 90,
+          width: 1000,
+          height: 25,
+        },
+        {
+          type: "block",
+          name: "wood",
+          x: 550,
+          y: 380,
+          angle: 90,
+          width: 1000,
+          height: 25,
+        },
+        {
+          type: "block",
+          name: "glass",
+          x: 625,
+          y: 316,
+          width: 150,
+          height: 25,
+        },
+        {
+          type: "block",
+          name: "glass",
+          x: 775,
+          y: 316,
+          width: 150,
+          height: 25,
+        },
+        {
+          type: "block",
+          name: "glass",
+          x: 625,
+          y: 252,
+          angle: 90,
+          width: 100,
+          height: 25,
+        },
+        {
+          type: "block",
+          name: "glass",
+          x: 775,
+          y: 252,
+          angle: 90,
+          width: 100,
+          height: 25,
+        },
+      ],
     },
     {
       foreground: "desert-foreground",
@@ -383,7 +523,7 @@ const box2d = {
     box2d.world = new b2World(gravity, allowSleep);
   },
 
-  createRectanle(entity, definition) {
+  createRectangle(entity, definition) {
     const bodyDef = new b2BodyDef();
 
     if (entity.isStatic) {
@@ -417,7 +557,33 @@ const box2d = {
     return body;
   },
 
-  createCircle(entity, definition){}
+  createCircle(entity, definition) {
+    const bodyDef = new b2BodyDef();
+
+    if (entity.isStatic) {
+      bodyDef.type = b2Body.b2_staticBody;
+    }
+    bodyDef.type = b2Body.b2_dynamicBody;
+
+    bodyDef.position.x = entity.x / box2d.scale;
+    bodyDef.position.y = entity.y / box2d.scale;
+
+    if (entity.angle) {
+      bodyDef.angle = (Math.PI * entity.angle) / 180;
+    }
+
+    const fixtureDef = new b2FixtureDef();
+
+    fixtureDef.density = definition.density;
+    fixtureDef.friction = definition.friction;
+    fixtureDef.restitution = definition.restitution;
+    fixtureDef.shape = new b2CircleShape(entity.radius / box2d.scale);
+
+    const body = box2d.world.CreateBody(bodyDef);
+    body.SetUserData(entity);
+    body.CreateFixture(fixtureDef);
+    return body;
+  },
 };
 
 window.addEventListener("load", function () {
