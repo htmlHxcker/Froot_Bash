@@ -36,6 +36,14 @@ let game = {
 		gameCanvas.width = width;
 		game.scale = scale;
 	},
+
+	playGame() {
+		if (window.wAudio) {
+			window.wAudio.playMutedSound();
+		}
+		game.showLevelScreen();
+    },
+    
 	loadSounds(onload) {
 		game.backgroundMusic = loader.loadSound('audio/dynamite');
 
@@ -982,7 +990,7 @@ let loader = {
 
 		game.showScreen('loadingscreen');
 
-		let audio = new Audio();
+		let audio = new (window.wAudio || Audio)();
 
 		audio.addEventListener('canplaythrough', loader.itemLoaded, false);
 		audio.src = url + loader.soundFileExtn;
@@ -1438,4 +1446,8 @@ window.addEventListener('load', function () {
 
 window.addEventListener('resize', function () {
 	game.resize();
+});
+
+document.addEventListener('touchmove', function (ev) {
+	ev.preventDefault();
 });
