@@ -23,6 +23,19 @@ let game = {
 		});
 	},
 
+	resize() {
+		let maxWidth = window.innerWidth;
+		let maxHeight = window.innerHeight;
+		let scale = Math.min(maxWidth / 640, maxHeight / 480);
+		let gameContainer = document.getElementById('gamecontainer');
+		gameContainer.style.transform =
+            'translate(-50%, -50%) ' + 'scale(' + scale + ')';
+        var width = Math.max(640, Math.min(1024, maxWidth / scale));
+		gameContainer.style.width = width + 'px';
+		var gameCanvas = document.getElementById('gamecanvas');
+		gameCanvas.width = width;
+		game.scale = scale;
+	},
 	loadSounds(onload) {
 		game.backgroundMusic = loader.loadSound('audio/dynamite');
 
@@ -1402,5 +1415,10 @@ let box2d = {
 };
 
 window.addEventListener('load', function () {
+    game.resize()
 	game.init();
+});
+
+window.addEventListener('resize', function () {
+	game.resize();
 });
