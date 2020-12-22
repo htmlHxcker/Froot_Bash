@@ -29,8 +29,8 @@ let game = {
 		let scale = Math.min(maxWidth / 640, maxHeight / 480);
 		let gameContainer = document.getElementById('gamecontainer');
 		gameContainer.style.transform =
-            'translate(-50%, -50%) ' + 'scale(' + scale + ')';
-        var width = Math.max(640, Math.min(1024, maxWidth / scale));
+			'translate(-50%, -50%) ' + 'scale(' + scale + ')';
+		var width = Math.max(640, Math.min(1024, maxWidth / scale));
 		gameContainer.style.width = width + 'px';
 		var gameCanvas = document.getElementById('gamecanvas');
 		gameCanvas.width = width;
@@ -1026,18 +1026,35 @@ let mouse = {
 		canvas.addEventListener('mousedown', mouse.mousedownhandler, false);
 		canvas.addEventListener('mouseup', mouse.mouseuphandler, false);
 		canvas.addEventListener('mouseout', mouse.mouseuphandler, false);
+
+		canvas.addEventListener('touchmove', mouse.touchmovehandler, false);
+
+		canvas.addEventListener('touchstart', mouse.mousedownhandler, false);
+		canvas.addEventListener('touchend', mouse.mouseuphandler, false);
+		canvas.addEventListener('touchcancel', mouse.mouseuphandler, false);
 	},
 
 	mousemovehandler(ev) {
 		let offset = game.canvas.getBoundingClientRect();
 
-		mouse.x = ev.clientX - offset.left;
-		mouse.y = ev.clientY - offset.top;
+		mouse.x = (ev.clientX - offset.left) / game.scale;
+		mouse.y = (ev.clientY - offset.top) / game.scale;
 
 		if (mouse.down) {
 			mouse.dragging = true;
 		}
 
+		ev.preventDefault();
+	},
+
+	touchmovehandler(ev) {
+		var touch = ev.targetTouches[0];
+		var offset = game.canvas.getBoundingClientRect();
+		mouse.x = (touch.clientX - offset.left) / game.scale;
+		mouse.y = (touch.clientY - offset.top) / game.scale;
+		if (mouse.down) {
+			mouse.dragging = true;
+		}
 		ev.preventDefault();
 	},
 
@@ -1415,7 +1432,7 @@ let box2d = {
 };
 
 window.addEventListener('load', function () {
-    game.resize()
+	game.resize();
 	game.init();
 });
 
