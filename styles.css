@@ -1,7 +1,5 @@
 body {
     background: #000900;
-
-    /* Prevent the ugly blue highlighting from accidental selection of text */
     user-select: none;
 }
 
@@ -10,8 +8,6 @@ body {
 }
 
 #gamecontainer {
-
-    /* Set game container width, height and background */
     width: 640px;
     height: 480px;
     background: url("images/splashscreen.png");
@@ -147,4 +143,8 @@ body {
     text-shadow: 0 0 2px black;
     color: yellow;
     text-align: center;
+}
+
+#dedication--text{
+    color:white;
 }
