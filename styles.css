@@ -84,6 +84,11 @@ body {
     background: url("images/loader.gif") no-repeat center;
     font: 12px Arial;
 }
+#hintmessage{
+   text-align: center;
+   color: white; 
+   margin-top: 350px;
+}
 
 /* Score Screen */
 

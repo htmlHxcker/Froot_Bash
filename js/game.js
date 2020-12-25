@@ -1108,7 +1108,7 @@ let loader = {
 
 		return audio;
 	},
-
+	
 	itemLoaded(ev) {
 		ev.target.removeEventListener(ev.type, loader.itemLoaded, false);
 
@@ -1116,13 +1116,6 @@ let loader = {
 
 		document.getElementById('loadingmessage').innerHTML =
 			'Loaded ' + loader.loadedCount + ' of ' + loader.totalCount;
-		const hints = [
-			'Drag the screen to pan it',
-			'Some levels are dependant on one move, fire wisely',
-			'Tap the fruit and drag back to fire',
-			'All fruits must diappear for you to win a level',
-		];
-		let hintMessageElem = document.getElementById('hintmessage');
 		if (loader.loadedCount === loader.totalCount) {
 			loader.loaded = true;
 			loader.loadedCount = 0;
@@ -1134,9 +1127,6 @@ let loader = {
 				loader.onload();
 				loader.onload = undefined;
 			}
-		} else {
-			hintMessageElem.innerText =
-				hints[Math.round(Math.random() * hints.length - 1)];
 		}
 	},
 };
@@ -1567,7 +1557,9 @@ window.addEventListener('load', function () {
 window.addEventListener('resize', function () {
 	game.resize();
 });
-
+window.addEventListener('contextmenu',function (ev) {
+	ev.preventDefault();
+})
 document.addEventListener('touchmove', function (ev) {
 	ev.preventDefault();
 });
