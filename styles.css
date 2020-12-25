@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Jura:wght@500&display=swap');
 body {
     background: #000900;
     user-select: none;
@@ -66,7 +67,6 @@ body {
 
     border: 0;
 
-    /* Remove the default blue border when an input is selected */
     outline: 0;
 }
 
@@ -93,7 +93,7 @@ body {
 
 #scorescreen {
     height: 60px;
-    font: 32px "Comic Sans MS";
+    font: 32px " 'Jura', sans-serif;";
     text-shadow: 0 0 2px black;
     color: white;
 }
@@ -122,7 +122,6 @@ body {
 
 #endingscreen div {
 
-    /* Center the popup div within the screen */
     position: absolute;
     left: 50%;
     top: 50%;
@@ -143,7 +142,7 @@ body {
 }
 
 .endingoption {
-    font: 20px "Comic Sans MS";
+    font: 20px  'Jura', sans-serif;
     text-shadow: 0 0 2px black;
     color: white;
 }
@@ -157,7 +156,7 @@ body {
 }
 
 #endingmessage {
-    font: 25px "Comic Sans MS";
+    font: 25px  'Jura', sans-serif;
     text-shadow: 0 0 2px black;
     color: yellow;
     text-align: center;
