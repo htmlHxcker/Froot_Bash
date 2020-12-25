@@ -1,10 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Jura:wght@500&display=swap');
 body {
     background: #000900;
     user-select: none;
     -webkit-touch-callout: none !important;
     overflow: hidden;
-    font-family: 'Jura', sans-serif;
+    font-family: 'Hanalei Fill', cursive;
 }
 
 #wrapper {
