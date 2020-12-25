@@ -42,8 +42,8 @@ let game = {
 			window.wAudio.playMutedSound();
 		}
 		game.showLevelScreen();
-    },
-    
+	},
+
 	loadSounds(onload) {
 		game.backgroundMusic = loader.loadSound('audio/dynamite');
 
@@ -624,7 +624,7 @@ let levels = {
 				{ type: 'hero', name: 'orange', x: 80, y: 405 },
 				{ type: 'hero', name: 'apple', x: 140, y: 405 },
 			],
-		},		
+		},
 		{
 			// Second level
 			foreground: 'desert-foreground',
@@ -892,9 +892,9 @@ let levels = {
 				{ type: 'hero', name: 'strawberry', x: 30, y: 415 },
 				{ type: 'hero', name: 'orange', x: 80, y: 405 },
 				{ type: 'hero', name: 'apple', x: 140, y: 405 },
-				{ type: 'hero', name: 'pineapple', x: 180, y: 405 },
 			],
-		},{
+		},
+		{
 			foreground: 'desert-foreground',
 			background: 'clouds-background',
 			entities: [
@@ -924,49 +924,86 @@ let levels = {
 					y: 380,
 					angle: 90,
 					width: 100,
-					height: 25,
+					height: 20,
+				},
+
+				{
+					type: 'block',
+					name: 'wood',
+					x: 800,
+					y: 380,
+					angle: 90,
+					width: 100,
+					height: 20,
+				},
+				{
+					type: 'block',
+					name: 'wood',
+					x: 650,
+					y: 300,
+					width: 400,
+					height: 20,
 				},
 				{
 					type: 'block',
 					name: 'glass',
 					x: 500,
-					y: 280,
+					y: 240,
 					angle: 90,
 					width: 100,
-					height: 25,
+					height: 20,
 				},
-				{ type: 'villain', name: 'burger', x: 500, y: 205, calories: 590 },
-
 				{
 					type: 'block',
 					name: 'wood',
 					x: 800,
-					y: 380,
+					y: 240,
 					angle: 90,
 					width: 100,
-					height: 25,
+					height: 20,
 				},
-        {
+				{
 					type: 'block',
 					name: 'wood',
-					x: 800,
-					y: 380,
+					x: 650,
+					y: 220,
 					width: 400,
-					height: 25,
+					height: 20,
 				},
 				{
 					type: 'block',
 					name: 'glass',
+					x: 500,
+					y: 130,
+					angle: 90,
+					width: 100,
+					height: 20,
+				},
+				{
+					type: 'block',
+					name: 'wood',
 					x: 800,
-					y: 280,
+					y: 130,
 					angle: 90,
 					width: 100,
 					height: 25,
 				},
-				{ type: 'villain', name: 'fries', x: 800, y: 205, calories: 420 },
+				{
+					type: 'block',
+					name: 'wood',
+					x: 650,
+					y: 90,
+					width: 400,
+					height: 20,
+				},
+				{ type: 'villain', name: 'fries', x: 750, y: 385, calories: 420 },
+				{ type: 'villain', name: 'burger', x: 550, y: 385, calories: 590 },
+				{ type: 'villain', name: 'burger', x: 750, y: 185, calories: 420 },
+				{ type: 'villain', name: 'burger', x: 550, y: 185, calories: 590 },
+				{ type: 'villain', name: 'sodaglass', x: 750, y: 285, calories: 420 },
+				{ type: 'villain', name: 'sodacan', x: 550, y: 285, calories: 590 },
 
 				{ type: 'hero', name: 'orange', x: 80, y: 405 },
-				{ type: 'hero', name: 'apple', x: 140, y: 405 },
 			],
 		},
 	],
@@ -1079,7 +1116,13 @@ let loader = {
 
 		document.getElementById('loadingmessage').innerHTML =
 			'Loaded ' + loader.loadedCount + ' of ' + loader.totalCount;
-
+		const hints = [
+			'Drag the screen to pan it',
+			'Some levels are dependant on one move, fire wisely',
+			'Tap the fruit and drag back to fire',
+			'All fruits must diappear for you to win a level',
+		];
+		let hintMessageElem = document.getElementById('hintmessage');
 		if (loader.loadedCount === loader.totalCount) {
 			loader.loaded = true;
 			loader.loadedCount = 0;
@@ -1091,6 +1134,9 @@ let loader = {
 				loader.onload();
 				loader.onload = undefined;
 			}
+		} else {
+			hintMessageElem.innerText =
+				hints[Math.round(Math.random() * hints.length - 1)];
 		}
 	},
 };
